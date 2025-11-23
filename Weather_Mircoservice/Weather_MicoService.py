@@ -4,6 +4,7 @@ import requests
 # on the terminal type: curl http://127.0.0.1:5002/
 app = Flask(__name__)
 
+
 # gets a current weather and condition of a given location long / lat
 @app.route('/api/weather', methods = ['GET'])
 def getWeather():

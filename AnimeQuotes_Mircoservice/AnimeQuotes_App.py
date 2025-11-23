@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 import pandas as pd
 import re
+from flask_cors import CORS
 
 # on the terminal type: curl http://127.0.0.1:5002/
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])  # allow your frontend
 
 # Pandas stuff as a puesdo DB
 filename = 'AnimeQuoteDB.csv'
