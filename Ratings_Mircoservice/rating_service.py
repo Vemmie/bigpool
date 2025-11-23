@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import rating_model as db
 
 # on the terminal type: curl http://127.0.0.1:5002/
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])  # allow your frontend
 
 @app.route('/api/rating', methods = ['POST'])
 # Json needs to have to add an item
@@ -32,7 +34,7 @@ def addRatingPost():
         return jsonify({"error": "Not a valid rating must be from [0 to 5]"}), 400
     
     db.addRating(str(service), item, rating)
-    return jsonify({f"{item} has been rated {rating}"}),202
+    return jsonify({ "message": f"{item} has been rated {rating}" }), 202
 
 # handles the get for specific item
 # Must have params of service and item to get
@@ -41,7 +43,7 @@ def GetItemRatings(service, item):
     rating = db.getRating(service, item)
     if rating == {} or rating == None:
         return jsonify({"error": "service or item not found"}), 404
-    return rating, 200
+    return jsonify({"rating": rating}), 200
 
 # handles get for all
 # Must have a valid service with no empty list
